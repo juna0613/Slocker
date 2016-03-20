@@ -1,0 +1,2 @@
+# Slocker
+Calculate SLOC 
