@@ -8,7 +8,7 @@ namespace Slocker
 {
     public interface IHistoryFetcher
     {
-        IEnumerable<History> Fetch(IHistoryCondition condition, IMessageParser parser);
+        IEnumerable<History> Fetch(IHistoryCondition condition, IHisotryParser parser);
         string RepositoryType { get; }
     }
 }

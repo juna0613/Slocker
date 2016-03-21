@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Slocker
 {
-    public interface IMessageParser
+    public interface IHisotryParser
     {
-        Message Parse(string comment);
+        IEnumerable<History> Parse(IEnumerable<string> logs);
     }
 }

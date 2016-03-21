@@ -10,7 +10,7 @@ namespace Slocker
     {
         protected readonly IHistoryCondition _cond;
         protected readonly IHistoryFetcher _fetcher;
-        protected readonly IMessageParser _parser;
+        protected readonly IHisotryParser _parser;
         public virtual IEnumerable<History> Load()
         {
             var data = _fetcher.Fetch(_cond, _parser);
