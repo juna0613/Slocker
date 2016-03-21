@@ -41,7 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
+    <Compile Include="History\History.cs" />
+    <Compile Include="History\HistoryManager.cs" />
+    <Compile Include="History\IHistoryCondition.cs" />
+    <Compile Include="History\IHistoryFetcher.cs" />
+    <Compile Include="History\IMessageParser.cs" />
+    <Compile Include="History\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Svn\SvnHistoryCondition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
