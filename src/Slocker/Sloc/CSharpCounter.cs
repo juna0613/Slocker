@@ -6,40 +6,46 @@ using System.Threading.Tasks;
 
 namespace Slocker
 {
+    using CSharp;
     public class CSharpCounter : ICounter
     {
-        private static readonly Regex singleComment = new Regex(@"^\s*(//|#).*"); // comment 
-        private static readonly Regex braceExpr = new Regex(@"^\s*({|}|)\s*$"); // line with only-brace or no string in line
-        private static readonly Regex blockComments = new Regex(@"/\*(.|\n|\r)*?\*/"); // *? means shortest match
-        private static readonly Regex[] skipps = new[]
-        {
-            singleComment,  braceExpr
-        };
         public int Count(string input)
         {
-            var commentRemoved = RemoveBlockComments(input);
-            var lines = SplitIntoLines(commentRemoved);
-            var filtered = Filter(lines);
-            return filtered.Count();
+            return input.RemoveBlockComments(CSharpRegexSet.BlockComment)
+                .SplitIntoLines()
+                .Filter(CSharpRegexSet.Brace, CSharpRegexSet.SingleComment, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause)
+                .Count();
         }
+    }
 
-        internal static string RemoveBlockComments(string input)
+    namespace CSharp
+    {
+        internal static class CSharpRegexSet
         {
-            return blockComments.Replace(input, "");
+            internal static readonly Regex SingleComment = new Regex(@"^\s*(//|#).*$"); // comment and derective
+            internal static readonly Regex Brace = new Regex(@"^\s*[\s{}]\s*$"); // line with only-brace
+            internal static readonly Regex BlockComment = new Regex(@"/\*(.|\n|\r)*?\*/"); // *? means shortest match
+            internal static readonly Regex UsingClause = new Regex(@"^\s*using\s+\w+(\s*\.\s*\w+)*\s*;\s*"); // using Foo . Bar  ; using Foo; using Foo.Bar;
+            internal static readonly Regex NamespaceClause = new Regex(@"^\s*namespace\s+\w+(\s*\.\w+)*\s*$");
         }
-
-        internal static IEnumerable<string> SplitIntoLines(string input)
+        
+        internal static class CSharpCounterExtension
         {
-            return input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
-        }
-
-        internal static IEnumerable<string> Filter(IEnumerable<string> data)
-        {
-            foreach(var d in data)
+            internal static string RemoveBlockComments(this string input, Regex commentRegex)
             {
-                if (skipps.Any(_ => _.IsMatch(d))) continue;
-                yield return d;
+                return commentRegex.Replace(input, "");
+            }
+
+            internal static IEnumerable<string> SplitIntoLines(this string input)
+            {
+                return input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            internal static IEnumerable<string> Filter(this IEnumerable<string> data, params Regex[] excludeRegexes)
+            {
+                return data.Where(x => excludeRegexes.All(rgx => !rgx.IsMatch(x)));
             }
         }
     }
+
 }
