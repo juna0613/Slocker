@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
+    <Compile Include="Filters\IFilter.cs" />
     <Compile Include="History\History.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="History\IHistoryCondition.cs" />
