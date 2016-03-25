@@ -18,6 +18,24 @@ namespace Slocker
         }
     }
 
+    internal static class CounterExtension
+    {
+        internal static string RemoveBlockComments(this string input, Regex commentRegex)
+        {
+            return commentRegex.Replace(input, "");
+        }
+
+        internal static IEnumerable<string> SplitIntoLines(this string input)
+        {
+            return input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        internal static IEnumerable<string> Filter(this IEnumerable<string> data, params Regex[] excludeRegexes)
+        {
+            return data.Where(x => excludeRegexes.All(rgx => !rgx.IsMatch(x)));
+        }
+    }
+
     namespace CSharp
     {
         internal static class CSharpRegexSet
@@ -29,23 +47,7 @@ namespace Slocker
             internal static readonly Regex NamespaceClause = new Regex(@"^\s*namespace\s+\w+(\s*\.\w+)*\s*$");
         }
         
-        internal static class CSharpCounterExtension
-        {
-            internal static string RemoveBlockComments(this string input, Regex commentRegex)
-            {
-                return commentRegex.Replace(input, "");
-            }
 
-            internal static IEnumerable<string> SplitIntoLines(this string input)
-            {
-                return input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            }
-
-            internal static IEnumerable<string> Filter(this IEnumerable<string> data, params Regex[] excludeRegexes)
-            {
-                return data.Where(x => excludeRegexes.All(rgx => !rgx.IsMatch(x)));
-            }
-        }
     }
 
 }

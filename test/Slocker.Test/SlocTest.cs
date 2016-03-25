@@ -47,14 +47,14 @@ namespace Slocker.Test
             }
             #endregion
             ";
-            var commentRemoved = CSharpCounterExtension.RemoveBlockComments(input, CSharpRegexSet.BlockComment);
-            var splitted = CSharpCounterExtension.SplitIntoLines(commentRemoved);
+            var commentRemoved = input.RemoveBlockComments(CSharpRegexSet.BlockComment);
+            var splitted = commentRemoved.SplitIntoLines();
             foreach(var d in splitted)
             {
                 Console.WriteLine(d);
             }
             Console.WriteLine("--------------");
-            var filtered = CSharpCounterExtension.Filter(splitted, CSharpRegexSet.SingleComment, CSharpRegexSet.Brace, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause);
+            var filtered = splitted.Filter(CSharpRegexSet.SingleComment, CSharpRegexSet.Brace, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause);
             foreach(var d in filtered)
             {
                 Console.WriteLine(d);
