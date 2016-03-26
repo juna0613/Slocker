@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Slocker.Filters
+namespace Slocker
 {
     public interface IFilter<T> where T : IEquatable<T>
     {
@@ -49,6 +49,15 @@ namespace Slocker.Filters
                 }
             }
             return ret.Distinct();
+        }
+    }
+
+    public class NullFilter<T> : IFilter<T>
+        where T : IEquatable<T>
+    {
+        public IEnumerable<T> Filter(IEnumerable<T> candidates)
+        {
+            return candidates;
         }
     }
 }
