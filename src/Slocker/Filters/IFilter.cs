@@ -21,7 +21,12 @@ namespace Slocker
         }
         public IEnumerable<T> Filter(IEnumerable<T> candidates)
         {
-            return _filters.Aggregate(candidates, (source, filter) => filter.Filter(source));
+            IEnumerable<T> ret = candidates;
+            foreach(var f in _filters)
+            {
+                ret = f.Filter(ret);
+            }
+            return ret;
         }
     }
 

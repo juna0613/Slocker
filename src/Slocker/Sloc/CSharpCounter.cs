@@ -9,30 +9,16 @@ namespace Slocker
     using CSharp;
     public class CSharpCounter : ICounter
     {
+        private static readonly ICounter _delegator = new RegexCounter(new RegexCoreCounterFactory(
+                CSharpRegexSet.BlockComment,
+                CSharpRegexSet.SingleComment,
+                CSharpRegexSet.NamespaceClause,
+                CSharpRegexSet.UsingClause,
+                CSharpRegexSet.Brace
+                ));
         public int Count(string input)
         {
-            return input.RemoveBlockComments(CSharpRegexSet.BlockComment)
-                .SplitIntoLines()
-                .Filter(CSharpRegexSet.Brace, CSharpRegexSet.SingleComment, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause)
-                .Count();
-        }
-    }
-
-    internal static class CounterExtension
-    {
-        internal static string RemoveBlockComments(this string input, Regex commentRegex)
-        {
-            return commentRegex.Replace(input, "");
-        }
-
-        internal static IEnumerable<string> SplitIntoLines(this string input)
-        {
-            return input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        internal static IEnumerable<string> Filter(this IEnumerable<string> data, params Regex[] excludeRegexes)
-        {
-            return data.Where(x => excludeRegexes.All(rgx => !rgx.IsMatch(x)));
+            return _delegator.Count(input);
         }
     }
 

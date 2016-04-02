@@ -13,6 +13,7 @@ namespace Slocker.Test
         [Test]
         public void Test1()
         {
+
             var input = @"
             using System.Threading.Tasks;
             namespace hoge.bar
@@ -47,20 +48,20 @@ namespace Slocker.Test
             }
             #endregion
             ";
-            var commentRemoved = input.RemoveBlockComments(CSharpRegexSet.BlockComment);
-            var splitted = commentRemoved.SplitIntoLines();
-            foreach(var d in splitted)
-            {
-                Console.WriteLine(d);
-            }
-            Console.WriteLine("--------------");
-            var filtered = splitted.Filter(CSharpRegexSet.SingleComment, CSharpRegexSet.Brace, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause);
-            foreach(var d in filtered)
-            {
-                Console.WriteLine(d);
-            }
-            var conter = new CSharpCounter();
-            Console.WriteLine(conter.Count(input: input));
+            //var commentRemoved = input.RemoveBlockComments(CSharpRegexSet.BlockComment);
+            //var splitted = commentRemoved.SplitIntoLines();
+            //foreach(var d in splitted)
+            //{
+            //    Console.WriteLine(d);
+            //}
+            //Console.WriteLine("--------------");
+            //var filtered = splitted.Filter(CSharpRegexSet.SingleComment, CSharpRegexSet.Brace, CSharpRegexSet.UsingClause, CSharpRegexSet.NamespaceClause);
+            //foreach(var d in filtered)
+            //{
+            //    Console.WriteLine(d);
+            //}
+            //var conter = new CSharpCounter();
+            //Console.WriteLine(conter.Count(input: input));
         }
     }
 }
