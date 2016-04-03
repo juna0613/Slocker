@@ -11,6 +11,12 @@ namespace Slocker
     {
         private readonly Regex _block, _single;
         private readonly Regex[] _misc;
+
+        public RegexCoreCounterFactory(RegexConfig conf) : 
+            this(conf.ToBlockCommentRegex(), conf.ToSingleCommentRegex(), conf.ToMiscExpressionRegex().ToArray())
+        {
+        }
+
         public RegexCoreCounterFactory(Regex blockComments, Regex singleLine, params Regex[] misc)
         {
             _block = blockComments;
@@ -19,7 +25,7 @@ namespace Slocker
         }
         public string RemoveBlockComments(string input)
         {
-            return _block.Replace(input, "");
+            return _block == null ? input : _block.Replace(input, "");
         }
 
         public string RemoveMiscThings(string input)
@@ -29,7 +35,7 @@ namespace Slocker
 
         public string RemoveSingleComment(string input)
         {
-            return _single.Replace(input, "");
+            return _single == null ? input : _single.Replace(input, "");
         }
     }
 }

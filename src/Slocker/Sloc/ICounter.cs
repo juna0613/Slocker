@@ -20,7 +20,6 @@ namespace Slocker
         }
         public int Count(string input)
         {
-
             return input.RemoveBlockComments(_factory)
                 .SplitIntoLines()
                 .Filter(_factory)
@@ -32,7 +31,7 @@ namespace Slocker
     {
         internal static string RemoveBlockComments(this string input, ICoreCounterFactory factory)
         {
-            return factory.RemoveBlockComments(input);
+            return factory == null ? input : factory.RemoveBlockComments(input);
         }
 
         internal static IEnumerable<string> SplitIntoLines(this string input)
@@ -44,8 +43,8 @@ namespace Slocker
         {
             return data.Select(x =>
             {
-                var x2 = string.IsNullOrEmpty(x) ? string.Empty : factory.RemoveSingleComment(x);
-                return   string.IsNullOrEmpty(x2) ? string.Empty : factory.RemoveMiscThings(x2);
+                var x2 = string.IsNullOrEmpty(x) ? string.Empty : factory == null ? x : factory.RemoveSingleComment(x);
+                return   string.IsNullOrEmpty(x2) ? string.Empty : factory == null ? x2 : factory.RemoveMiscThings(x2);
             }).Where(x => !string.IsNullOrEmpty(x));
         }
     }
