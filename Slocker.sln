@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slocker", "src\Slocker\Sloc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slocker.Test", "test\Slocker.Test\Slocker.Test.csproj", "{38D79677-9384-4EF8-BAAF-44BFF05E262F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sloc", "src\Sloc\Sloc.csproj", "{FA5F92DF-A4D4-480B-9A39-785EFB3663E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{38D79677-9384-4EF8-BAAF-44BFF05E262F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38D79677-9384-4EF8-BAAF-44BFF05E262F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38D79677-9384-4EF8-BAAF-44BFF05E262F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA5F92DF-A4D4-480B-9A39-785EFB3663E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA5F92DF-A4D4-480B-9A39-785EFB3663E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA5F92DF-A4D4-480B-9A39-785EFB3663E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA5F92DF-A4D4-480B-9A39-785EFB3663E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +38,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{97EB4391-7073-4F9D-974C-EE4377C5690E} = {D52B92D0-96C3-4205-9BCA-70295B830F8D}
 		{38D79677-9384-4EF8-BAAF-44BFF05E262F} = {B46BD7AA-CE1C-43A4-A9B0-7B4A9AC465F1}
+		{FA5F92DF-A4D4-480B-9A39-785EFB3663E8} = {D52B92D0-96C3-4205-9BCA-70295B830F8D}
 	EndGlobalSection
 EndGlobal
