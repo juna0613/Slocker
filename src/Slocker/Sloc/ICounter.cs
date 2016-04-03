@@ -11,10 +11,10 @@ namespace Slocker
         int Count(string input);
     }
 
-    public class RegexCounter : ICounter
+    public class SourceCodeCounter : ICounter
     {
         private readonly ICoreCounterFactory _factory;
-        public RegexCounter(RegexCoreCounterFactory factory)
+        public SourceCodeCounter(ICoreCounterFactory factory)
         {
             _factory = factory;
         }

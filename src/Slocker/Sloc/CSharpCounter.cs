@@ -9,7 +9,7 @@ namespace Slocker
     using CSharp;
     public class CSharpCounter : ICounter
     {
-        private static readonly ICounter _delegator = new RegexCounter(new RegexCoreCounterFactory(
+        private static readonly ICounter _delegator = new SourceCodeCounter(new RegexCoreCounterFactory(
                 CSharpRegexSet.BlockComment,
                 CSharpRegexSet.SingleComment,
                 CSharpRegexSet.NamespaceClause,
@@ -32,8 +32,6 @@ namespace Slocker
             internal static readonly Regex UsingClause = new Regex(@"^\s*using\s+\w+(\s*\.\s*\w+)*\s*;\s*"); // using Foo . Bar  ; using Foo; using Foo.Bar;
             internal static readonly Regex NamespaceClause = new Regex(@"^\s*namespace\s+\w+(\s*\.\w+)*\s*$");
         }
-        
-
     }
 
 }
