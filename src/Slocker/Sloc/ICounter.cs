@@ -11,6 +11,14 @@ namespace Slocker
         int Count(string input);
     }
 
+    public class FileLineCounter : ICounter
+    {
+        public int Count(string input)
+        {
+            return input.SplitIntoLines().Count();
+        }
+    }
+
     public class SourceCodeCounter : ICounter
     {
         private readonly ICoreCounterFactory _factory;
@@ -43,7 +51,7 @@ namespace Slocker
         {
             return data.Select(x =>
             {
-                var x2 = string.IsNullOrEmpty(x) ? string.Empty : factory == null ? x : factory.RemoveSingleComment(x);
+                var x2 = string.IsNullOrEmpty(x)  ? string.Empty : factory == null ? x : factory.RemoveSingleComment(x);
                 return   string.IsNullOrEmpty(x2) ? string.Empty : factory == null ? x2 : factory.RemoveMiscThings(x2);
             }).Where(x => !string.IsNullOrEmpty(x));
         }
