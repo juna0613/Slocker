@@ -43,6 +43,7 @@
     <Compile Include="Core.cs" />
     <Compile Include="Filters\PatternFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\PatternParser.cs" />
     <Compile Include="History\History.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="History\IHistoryCondition.cs" />

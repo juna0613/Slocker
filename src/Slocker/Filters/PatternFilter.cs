@@ -39,10 +39,8 @@ namespace Slocker
         }
     }
 
-    public static class PatternParser
+    public static class FilterParserExtension
     {
-        private static readonly Regex PlusPattern = new Regex(@"^\s*(\[-\].+?)?\s*\[\+\](.+?)\s*(\[-\].+?)?$");
-        private static readonly Regex MinusPattern = new Regex(@"^\s*(\[\+\].+?)?\[-\](.+?)\s*(\[\+\].+)?$");
         /// <summary>
         /// [+]**/*.cs;**/*.reg [-]*Test*
         /// </summary>
@@ -50,16 +48,14 @@ namespace Slocker
         /// <returns></returns>
         public static IFilter<string> ToPatternFilter(this string pattern)
         {
-            var plusFilter = PlusPattern.IsMatch(pattern) ?
-                new OrFilter<string>(PlusPattern.Replace(pattern, "$2").Split(';').Select(x => new PatternFilter(x)).ToArray()) :
-                (IFilter<string>) new NullFilter<string>();
-            
-            var minusFilter = MinusPattern.IsMatch(pattern) ?
-                new AndFilter<string>(MinusPattern.Replace(pattern, "$2").Split(';').Select(x => new NegatePatternFilter(x)).ToArray()) :
-                (IFilter<string>) new NullFilter<string>();
-
-            return new AndFilter<string>(plusFilter, minusFilter);
+            return pattern.PatternHelp((plus, minus) =>
+            {
+                var plusFilter = string.IsNullOrEmpty(plus) ? (IFilter<string>)new NullFilter<string>() : 
+                                new OrFilter<string>(plus.Split(';').Select(x => new PatternFilter(x)).ToArray());
+                var minusFilter = string.IsNullOrEmpty(minus) ? (IFilter<string>)new NullFilter<string>() :
+                                new AndFilter<string>(minus.Split(';').Select(x => new NegatePatternFilter(x)).ToArray());
+                return new AndFilter<string>(plusFilter, minusFilter);
+            });
         }
     }
-
 }
