@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FilterTest.cs" />
+    <Compile Include="RegexConfigTest.cs" />
     <Compile Include="SlocTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
