@@ -21,12 +21,7 @@ namespace Slocker
         }
         public IEnumerable<T> Filter(IEnumerable<T> candidates)
         {
-            IEnumerable<T> ret = candidates;
-            foreach(var f in _filters)
-            {
-                ret = f.Filter(ret);
-            }
-            return ret;
+            return _filters.Aggregate(candidates, (res, f) => f.Filter(res));
         }
     }
 
@@ -40,20 +35,7 @@ namespace Slocker
         }
         public IEnumerable<T> Filter(IEnumerable<T> candidates)
         {
-            IEnumerable<T> ret = null;
-            foreach(var f in _filters)
-            {
-                var filtered = f.Filter(candidates);
-                if(ret == null)
-                {
-                    ret = filtered;
-                }
-                else
-                {
-                    ret = ret.Union(filtered);
-                }
-            }
-            return ret.Distinct();
+            return _filters.Select(f => f.Filter(candidates)).SelectMany(xs => xs).Distinct();
         }
     }
 
