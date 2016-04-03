@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
+    <Compile Include="Filters\PatternFilter.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\PatternParser.cs" />
     <Compile Include="History\History.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="History\IHistoryCondition.cs" />
@@ -48,10 +55,17 @@
     <Compile Include="History\IMessageParser.cs" />
     <Compile Include="History\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\RegexConfig.cs" />
     <Compile Include="Sloc\CSharpCounter.cs" />
     <Compile Include="Sloc\ICounter.cs" />
+    <Compile Include="Sloc\ICoreCounterFactory.cs" />
+    <Compile Include="Sloc\RegexCoreCounterFactory.cs" />
+    <Compile Include="Sloc\SourceCounterFactory.cs" />
     <Compile Include="Svn\SvnHistoryCondition.cs" />
     <Compile Include="Svn\SvnHistoryFetcher.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,6 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Release"/>
+  <Config name="Release">
+    <assembly path="test\Slocker.Test\bin\Release\Slocker.Test.dll"/>
+  </Config>
+</NUnitProject>
