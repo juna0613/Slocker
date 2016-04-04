@@ -9,14 +9,30 @@ namespace Slocker
 {
     public class SourceCounterFactory
     {
-        public ICounter Create(string filename)
+        public static ICounter Create(string extension, IEnumerable<RegexConfig> confs, IDictionary<string, ICounter> cache = null)
         {
-            // this should be configuration (or rule) based way -> should have more extensible way  
-            switch(Path.GetExtension(filename))
+            if (cache == null)
             {
-                case "cs": return new CSharpCounter();
-                default  : return default(ICounter);
+                return CreateFromConfig(extension, confs);
             }
+            ICounter cnt;
+            if(!cache.TryGetValue(extension, out cnt))
+            {
+                cnt = CreateFromConfig(extension, confs);
+                cache[extension] = cnt;
+            }
+            return cnt;
+        }
+
+        private static ICounter CreateFromConfig(string extension, IEnumerable<RegexConfig> confs)
+        {
+            var conf = confs.FirstOrDefault(x => x.Extensions.Contains(extension));
+            if (conf == default(RegexConfig))
+            {
+                return new FileLineCounter();
+            }
+            var cnt = new SourceCodeCounter(new RegexCoreCounterFactory(conf), extension);
+            return cnt;
         }
     }
 }

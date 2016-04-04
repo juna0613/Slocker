@@ -15,10 +15,16 @@ namespace Slocker
                 CSharpRegexSet.NamespaceClause,
                 CSharpRegexSet.UsingClause,
                 CSharpRegexSet.Brace
-                ));
+                ), "*.cs");
+
         public int Count(string input)
         {
             return _delegator.Count(input);
+        }
+
+        public bool IsTarget(string filename)
+        {
+            return _delegator.IsTarget(filename);
         }
     }
 

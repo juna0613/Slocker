@@ -30,20 +30,20 @@ namespace Slocker.Test
         [Test]
         public void TestSaveAndRead()
         {
-            var conf = new RegexConfig
+            var conf = new[] { new RegexConfig
             {
                 BlockComment = "hoge",
                 MiscExpressions = new[] { "bar" },
                 SingleComment = "zoo"
-            };
+            }};
 
             conf.Save(path);
 
             var conf2 = RegexConfigExtensions.Load(path);
 
-            Assert.That(conf.BlockComment, Is.EqualTo(conf2.BlockComment));
-            Assert.That(conf.SingleComment, Is.EqualTo(conf2.SingleComment));
-            Assert.That(conf.MiscExpressions, Is.EquivalentTo(conf2.MiscExpressions));
+            Assert.That(conf.First().BlockComment, Is.EqualTo(conf2.First().BlockComment));
+            Assert.That(conf.First().SingleComment, Is.EqualTo(conf2.First().SingleComment));
+            Assert.That(conf.First().MiscExpressions, Is.EquivalentTo(conf2.First().MiscExpressions));
         }
     }
 }

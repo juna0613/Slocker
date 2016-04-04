@@ -2,29 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Slocker
 {
     public interface ICounter
     {
+        bool IsTarget(string filename);
         int Count(string input);
     }
 
     public class FileLineCounter : ICounter
     {
+        
         public int Count(string input)
         {
             return input.SplitIntoLines().Count();
+        }
+
+        public bool IsTarget(string filename)
+        {
+            return true;
         }
     }
 
     public class SourceCodeCounter : ICounter
     {
         private readonly ICoreCounterFactory _factory;
-        public SourceCodeCounter(ICoreCounterFactory factory)
+        private readonly Regex[] _patterns;
+        public SourceCodeCounter(ICoreCounterFactory factory, params string[] filepatterns)
         {
             _factory = factory;
+            _patterns = filepatterns.Select(x => x.ToLikeRegex()).ToArray();
         }
         public int Count(string input)
         {
@@ -32,6 +42,11 @@ namespace Slocker
                 .SplitIntoLines()
                 .Filter(_factory)
                 .Count();
+        }
+
+        public bool IsTarget(string filename)
+        {
+            return _patterns.Any(x => x.IsMatch(filename));
         }
     }
 
