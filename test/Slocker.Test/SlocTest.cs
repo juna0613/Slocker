@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 namespace Slocker.Test
 {
-    using CSharp;
     [TestFixture]
     public class SlockTest
     {

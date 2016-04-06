@@ -45,23 +45,6 @@ namespace Slocker.Test
             Assert.That(conf.First().SingleComment, Is.EqualTo(conf2.First().SingleComment));
             Assert.That(conf.First().MiscExpressions, Is.EquivalentTo(conf2.First().MiscExpressions));
         }
-        [Test]
-        public void TestSave()
-        {
-            var csharp = new RegexConfig
-            {
-                BlockComment = CSharp.CSharpRegexSet.BlockComment.ToString(),
-                SingleComment = CSharp.CSharpRegexSet.SingleComment.ToString(),
-                MiscExpressions = new[] {
-                    CSharp.CSharpRegexSet.Brace.ToString(),
-                    CSharp.CSharpRegexSet.NamespaceClause.ToString(),
-                    CSharp.CSharpRegexSet.UsingClause.ToString()
-                },
-                Extensions = new[] {"cs"}
-            };
-            var stringstream = new System.IO.StringWriter();
-            new[] { csharp }.Save(stringstream);
-            Console.WriteLine(stringstream.ToString());
-        }
+
     }
 }
