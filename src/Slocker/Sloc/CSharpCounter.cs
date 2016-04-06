@@ -15,7 +15,7 @@ namespace Slocker
                 CSharpRegexSet.NamespaceClause,
                 CSharpRegexSet.UsingClause,
                 CSharpRegexSet.Brace
-                ), "*.cs");
+                ), false, "*.cs");
 
         public int Count(string input)
         {

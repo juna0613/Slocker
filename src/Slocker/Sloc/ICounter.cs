@@ -31,17 +31,25 @@ namespace Slocker
     {
         private readonly ICoreCounterFactory _factory;
         private readonly Regex[] _patterns;
-        public SourceCodeCounter(ICoreCounterFactory factory, params string[] filepatterns)
+        private readonly bool _verbose;
+        public SourceCodeCounter(ICoreCounterFactory factory, bool verbose = false, params string[] filepatterns)
         {
             _factory = factory;
+            _verbose = verbose;
             _patterns = filepatterns.Select(x => x.ToLikeRegex()).ToArray();
         }
         public int Count(string input)
         {
-            return input.RemoveBlockComments(_factory)
+            var data = input.RemoveBlockComments(_factory)
                 .SplitIntoLines()
-                .Filter(_factory)
-                .Count();
+                .Filter(_factory).ToList();
+            var cnt = data.Count;
+            if (_verbose)
+            {
+                Console.WriteLine("-----------");
+                data.ForEach(Console.WriteLine);
+            }
+            return cnt;
         }
 
         public bool IsTarget(string filename)

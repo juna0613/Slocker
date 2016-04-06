@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreTest.cs" />
     <Compile Include="FilterTest.cs" />
     <Compile Include="RegexConfigTest.cs" />
     <Compile Include="SlocTest.cs" />

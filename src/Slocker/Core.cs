@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,6 +21,12 @@ namespace Slocker
                 "^" + Regex.Escape(pattern).Replace(@"\*", ".*").Replace(@"\?", ".") + "$",
                 RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
+        }
+        public static IEnumerable<string> RecursiveGetFiles(this string dir, string searchPattern = "*.*")
+        {
+            return Directory.GetFiles(dir, searchPattern).Union(
+                Directory.GetDirectories(dir).SelectMany(sub => sub.RecursiveGetFiles(searchPattern))
+            ).Select(x => Path.GetFullPath(x));
         }
     }
 }

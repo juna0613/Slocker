@@ -38,16 +38,26 @@ namespace Slocker
             CreateDirectoryIfNotExist(Path.GetDirectoryName(path));
             using (var writer = new StreamWriter(path, false))
             {
-                writer.Write(Newtonsoft.Json.JsonConvert.SerializeObject(conf.ToArray()));
+                Save(conf, writer);
             }
+        }
+
+        public static void Save(this IEnumerable<RegexConfig> confs, TextWriter writer)
+        {
+            writer.Write(Newtonsoft.Json.JsonConvert.SerializeObject(confs.ToArray()));
         }
 
         public static RegexConfig[] Load(string path)
         {
             using (var reader = new StreamReader(path))
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<RegexConfig[]>(reader.ReadToEnd());
+                return Load(reader);
             }
+        }
+
+        public static RegexConfig[] Load(TextReader reader)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<RegexConfig[]>(reader.ReadToEnd());
         }
 
         private static void CreateDirectoryIfNotExist(string dir)

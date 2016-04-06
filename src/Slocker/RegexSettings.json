@@ -1,0 +1,8 @@
+﻿[
+  {
+    "Extensions": [ ".cs" ],
+    "BlockComment": "/\\*(.|\\n|\\r)*?\\*/",
+    "SingleComment": "^\\s*(//|#).*$",
+    "MiscExpressions": [ "^\\s*[\\s{}]\\s*$", "^\\s*namespace\\s+\\w+(\\s*\\.\\w+)*\\s*$", "^\\s*using\\s+\\w+(\\s*\\.\\s*\\w+)*\\s*;\\s*" ]
+  }
+]
