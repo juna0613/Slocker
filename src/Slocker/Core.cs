@@ -24,9 +24,16 @@ namespace Slocker
         }
         public static IEnumerable<string> RecursiveGetFiles(this string dir, string searchPattern = "*.*")
         {
-            return Directory.GetFiles(dir, searchPattern).Union(
+            try
+            {
+                return Directory.GetFiles(dir, searchPattern).Union(
                 Directory.GetDirectories(dir).SelectMany(sub => sub.RecursiveGetFiles(searchPattern))
-            ).Select(x => Path.GetFullPath(x));
+                ).Select(x => Path.GetFullPath(x));
+            }
+            catch
+            {
+                return new string[] { };
+            }
         }
     }
 }
