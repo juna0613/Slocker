@@ -12,7 +12,7 @@ namespace Slocker.Test
         [Test]
         public void TestRecursiveGetFiles()
         {
-            var files = (Environment.CurrentDirectory + @"\..\..\").RecursiveGetFiles("*.cs");
+            var files = (Environment.CurrentDirectory + @"\..\").RecursiveGetFiles("*.cs");
             Assert.That(files.Select(x => System.IO.Path.GetExtension(x)).Distinct().Count(), Is.EqualTo(1));
         }
     }
