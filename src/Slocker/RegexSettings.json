@@ -4,5 +4,23 @@
     "BlockComment": "/\\*(.|\\n|\\r)*?\\*/",
     "SingleComment": "^\\s*(//|#).*$",
     "MiscExpressions": [ "^\\s*[\\s{}]\\s*$", "^\\s*namespace\\s+\\w+(\\s*\\.\\w+)*\\s*$", "^\\s*using\\s+\\w+(\\s*\\.\\s*\\w+)*\\s*;\\s*" ]
+  },
+  {
+    "Extensions": [ ".c", ".cpp", ".cxx" ],
+    "BlockComment": "/\\*(.|\\n|\\r)*?\\*/",
+    "SingleComment": "^\\s*(//|#).*$",
+    "MiscExpressions": [ "^\\s*[\\s{}]\\s*$" ]
+  },
+  {
+    "Extensions": [ ".rb" ],
+    "BlockComment": "/=begin(.|\\n|\\r)*?=end/",
+    "SingleComment": "^\\s*#.*$",
+    "MiscExpressions": [ "^\\s*end\\s*$" ]
+  },
+  {
+    "Extensions": [ ".java" ],
+    "BlockComment": "/\\*(.|\\n|\\r)*?\\*/",
+    "SingleComment": "^\\s*//.*$",
+    "MiscExpressions": [ ]
   }
 ]

@@ -7,6 +7,10 @@ using CommandLine;
 namespace Sloc
 {
     using Slocker;
+    using System.Configuration;
+    using System.IO;
+    using System.Reflection;
+
     class Program
     {
         static void Main(string[] args)
@@ -44,18 +48,19 @@ namespace Sloc
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
             var filter = opt.Filter.ToPatternFilter();
-            var settingPath = System.Configuration.ConfigurationManager.AppSettings.Get("RegexSettingPath");
-            settingPath = System.IO.Path.Combine(
-                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), 
+            var settingPath = ConfigurationManager.AppSettings.Get("RegexSettingPath");
+            settingPath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), 
                 settingPath);
             var confgs = RegexConfigExtensions.Load(settingPath);
             var cache = new Dictionary<string, ICounter>();
+            var simpleLineCounter = new FileLineCounter();
             foreach(var f in filter.Filter(opt.Target.RecursiveGetFiles()))
             {
-                var counter = SourceCounterFactory.Create(System.IO.Path.GetExtension(f), confgs, cache, opt.Verbose);
-                var data = System.IO.File.ReadAllText(f);
+                var counter = opt.IsSimpleMode ? simpleLineCounter : SourceCounterFactory.Create(Path.GetExtension(f), confgs, cache, opt.Verbose);
+                var data = File.ReadAllText(f);
                 var cnt = counter.Count(data);
-                Console.WriteLine("{0}\t{1}", f, cnt);
+                Console.WriteLine("{0}{1}{2}", f, opt.Delimitor, cnt);
             }
         }
     }
@@ -88,10 +93,24 @@ namespace Sloc
         [Option('v', "verbose", DefaultValue = false, HelpText = "Verbose output")]
         public bool Verbose { get; set; }
 
+        [Option('d', "linedelimitor", DefaultValue = '\t', HelpText = "Line Delimitor")]
+        public char Delimitor { get; set; }
+
+        [Option('s', "simple-mode", DefaultValue = false, HelpText = "Simple mode, e.g. just remove empty lines")]
+        public bool IsSimpleMode { get; set; }
+
         [HelpOption]
         public string GetUsage()
         {
             return CommandLine.Text.HelpText.AutoBuild(this);
         }
+    }
+
+    public class HistoricalOptions
+    {
+        [Option('t', "target", Required = true, HelpText = "Full path to the source repository")]
+        public string Target { get; set; }
+
+
     }
 }
